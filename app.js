@@ -1,12 +1,13 @@
-const express = require("express");
-const dotenv = require("dotenv");
+const express = require("express")
+const dotenv = require("dotenv")
 
 dotenv.config()
 
 const readFilesRouter = require("./routes/readFilesRouter")
-const createFilesRouter = require("./routes/createFileRouter")
+const createFilesRouter = require("./routes/createFilesRouter")
+const updateFilesRouter = require("./routes/updateFilesRouter")
 
-const app = express();
+const app = express()
 
 app.get("/api", (req, res) => {
     res.json({
@@ -16,6 +17,7 @@ app.get("/api", (req, res) => {
 
 app.use("/createFiles", createFilesRouter)
 app.use("/readFiles", readFilesRouter)
+app.use("/updateFiles", updateFilesRouter)
 
 const PORT = process.env.PORT || 3000; 
-app.listen(PORT, () => console.log(`Listening on Port ${PORT}`));
+app.listen(PORT, () => console.log(`Listening on Port ${PORT}`))

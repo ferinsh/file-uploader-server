@@ -15,6 +15,9 @@ async function handleFileUpload (req, res, next) {
     }
     
     try {
+        
+        fileData = await handleDuplicateFile(fileData)
+        // console.log("fileData: ", fileData)
         await prisma.file.create({
             data: fileData
         });
@@ -22,6 +25,28 @@ async function handleFileUpload (req, res, next) {
     } catch(err) {
         console.error("Error in creating file: ", err)
     }
+}
+
+async function handleDuplicateFile(data) {
+
+    try {
+        rows = await prisma.file.findMany({
+            where: {
+                userId: data.userId,
+                originalname: {
+                    startsWith: data.originalname
+                }
+            }
+        })
+        if(rows.length !== 0){
+            // console.log(rows)
+            data.originalname = rows.slice(-1)[0].originalname + '_1'
+        }
+    } catch(err) {
+        console.error("Error in appending filename: ", err)
+    }
+    // console.log(data)
+    return data
 }
 
 module.exports = {
