@@ -22,4 +22,4 @@ app.use("/updateFiles", updateFilesRouter)
 app.use("/deleteFiles", deleteFilesRouter)
 
 const PORT = process.env.PORT || 3000; 
-app.listen(PORT, () => console.log(`Listening on Port ${PORT}`))
+app.listen(PORT, '0.0.0.0', () => console.log(`Listening on Port ${PORT}`))
